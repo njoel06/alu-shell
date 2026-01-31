@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -empty -print0 | while IFS= read -r -d '' f; do echo "${f#./}"; done
+find . -empty -printf "%P\n"
