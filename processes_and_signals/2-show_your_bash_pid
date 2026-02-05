@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Display lines containing "bash" to easily get the PID of Bash processes
+# shellcheck disable=SC2009
+ps -ef --forest | grep bash
