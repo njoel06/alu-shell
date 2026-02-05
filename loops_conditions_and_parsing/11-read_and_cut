@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# This script displays username, user id, and home directory from /etc/passwd
+while IFS= read -r line
+do
+    # Extract fields using cut
+    username=$(echo "$line" | cut -d: -f1)
+    userid=$(echo "$line" | cut -d: -f3)
+    homedir=$(echo "$line" | cut -d: -f6)
+    
+    echo "$username:$userid:$homedir"
+done < /etc/passwd
