@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Init script to manage the manage_my_process daemon
 
-# Get the path to the manage_my_process script (assuming they're in same directory)
+# Get the path to the manage_my_process script
 SCRIPT_DIR="$(dirname "$0")"
 MANAGE_SCRIPT="$SCRIPT_DIR/manage_my_process"
 
@@ -10,14 +10,14 @@ case "$1" in
         # Start the process
         "$MANAGE_SCRIPT" &
         PID=$!
-        echo $PID > /var/run/my_process.pid
+        echo "$PID" > /var/run/my_process.pid
         echo "manage_my_process started"
         ;;
     stop)
         # Stop the process
         if [ -f /var/run/my_process.pid ]; then
             PID=$(cat /var/run/my_process.pid)
-            kill $PID 2>/dev/null
+            kill "$PID" 2>/dev/null
             rm -f /var/run/my_process.pid
             echo "manage_my_process stopped"
         else
@@ -28,7 +28,7 @@ case "$1" in
         # Stop if running
         if [ -f /var/run/my_process.pid ]; then
             PID=$(cat /var/run/my_process.pid)
-            kill $PID 2>/dev/null
+            kill "$PID" 2>/dev/null
             rm -f /var/run/my_process.pid
             sleep 1
         fi
@@ -36,12 +36,12 @@ case "$1" in
         # Start again
         "$MANAGE_SCRIPT" &
         PID=$!
-        echo $PID > /var/run/my_process.pid
+        echo "$PID" > /var/run/my_process.pid
         echo "manage_my_process restarted"
         ;;
     *)
         # Invalid argument
-        echo "Usage: $0 {start|stop|restart}"
+        echo "Usage: manage_my_process {start|stop|restart}"
         exit 1
         ;;
 esac
